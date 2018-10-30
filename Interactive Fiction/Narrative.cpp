@@ -33,7 +33,8 @@ using namespace std;
 //Let's create some Variables.
 string userName;  //Takes in a string of UserName.
 string userCommands;  //Displays a list of commands for the user.
-bool commandsUsed = false;  //Create a bool to determine if commands are being used.
+string userLost;  //String to confirm user is lost.
+bool commandsUsed;  //Create a bool to determine if commands are being used.
 
 
 
@@ -42,9 +43,19 @@ bool commandsUsed = false;  //Create a bool to determine if commands are being u
 void GetTextFromUser()
 {
 	//TODO: Make This
-	cout << "Hello. What is your name? ";
+	system("pause");
+	cout << "\nTo see commands. Simply type 'commands'." << endl;
+	cout << "Try it now: ";
+	cin >> userCommands;
+	//If user types the word Commands/commands.
+	if (userCommands == "Commands" || userCommands == "commands")
+	{
+		cout << "Here are your commands...\n";
+		commandsUsed = true;
+	}
+	system("pause");
+	cout << "\nUser... What is your name? ";
 	cin >> userName;
-	cout << "\nHELLO! " << userName << " it is so nice to meet you!\n";
 }
 
 //Function Named 'GetNumbersFromUser' this will take a string and return an integer.
@@ -57,33 +68,28 @@ void GetNumbersFromUser()
 void WelcomeUser()
 {
 	//TODO: Make This
-	cout << userName << ", welcome to 'INSERT STORY NAME HERE." << endl;
-	cout << "You are about to embark on an incredible journey." << endl;
-	cout << "However, before we begin. I would like to cover some ground rules, and give access to a list of commands." << endl;
-	cout << "To see these commands. Simply type 'commands' at any time." << endl;
-	cout << "Let's try it now: ";
-	cin >> userCommands;
-	//TODO: Make this loop if user inputs invalid command.
-	do
+	cout << userName << ", welcome to the Room of the Lost." << endl;
+	cout << "......." << endl;
+	system("pause");
+	cout << "Are you feeling lost yet?" << endl;
+	cout << "Yes or No? ";
+	cin >> userLost;
+	if (userLost == "Yes" || userLost == "yes" || userLost == "Y" || userLost == "y")
 	{
-		if (userCommands == "Commands" || userCommands == "commands")
-		{
-			cout << "Here are your commands...\n\n";
-			commandsUsed = true;
-		}
-		else
-		{
-			cout << "Sorry, that option was invalid. Try Again.\n\n";
-			commandsUsed = false;
-		}
+		cout << "\nPerfect." << endl;
 	}
-	while (commandsUsed);
+	else if (userLost == "No" || userLost == "no" || userLost == "N" || userLost == "n")
+	{
+		cout << "\nIt's okay. I was in denial at first too." << endl;
+	}
+	
 	
 }
 
 //Function Named 'NarrativeForUser' this will be the main handler for the story. It will incorporate use of other functions. Primarily used to keep main() clean and organized.
 void NarrativeForUser()
 {
+	cout << "\nInsert Narrative Here." << endl;
 	//TODO: Make This
 }
 
@@ -93,6 +99,7 @@ int main()
 	//TODO: Make This
 	GetTextFromUser();
 	WelcomeUser();
+	NarrativeForUser();
 
 	//Add in System Pause and Return Statements.
 	system("pause");

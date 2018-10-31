@@ -39,22 +39,28 @@ bool commandsUsed;  //Create a bool to determine if commands are being used.
 
 
 //Let's the Functions begin!!!
+//Function: GetUserCommands. Allows user to see a list of commands.
+void GetUserCommands()
+{
+	cout << "\nTo see commands. Simply type commands: ";
+	cin >> userCommands;
+	//If user types the word Commands/commands.
+	if (userCommands == "Commands" || userCommands == "commands")
+	{
+		cout << "Common Words: Yes, No, Look Up, Look Left, Look Right, Look Down, Grab, Touch[item name], open.\n" << endl;
+		cout << "Press 'B' to open and close your bag." << endl;
+		commandsUsed = true;
+	}
+	system("pause");
+}
+
 //Function Named 'GetTextFromUser' this will take a string and returns a string.
 void GetTextFromUser()
 {
 	//TODO: Make This
 	system("pause");
-	cout << "\nTo see commands. Simply type 'commands'." << endl;
-	cout << "Try it now: ";
-	cin >> userCommands;
-	//If user types the word Commands/commands.
-	if (userCommands == "Commands" || userCommands == "commands")
-	{
-		cout << "Here are your commands...\n";
-		commandsUsed = true;
-	}
-	system("pause");
-	cout << "\nUser... What is your name? ";
+	GetUserCommands();
+	cout << "\n... What is your name? ";
 	cin >> userName;
 }
 
@@ -68,7 +74,9 @@ void GetNumbersFromUser()
 void WelcomeUser()
 {
 	//TODO: Make This
-	cout << userName << ", welcome to the Room of the Lost." << endl;
+	cout << userName << ", welcome to the Lost Room." << endl;
+	cout << "......." << endl;
+	system("pause");
 	cout << "......." << endl;
 	system("pause");
 	cout << "Are you feeling lost yet?" << endl;
@@ -81,6 +89,11 @@ void WelcomeUser()
 	else if (userLost == "No" || userLost == "no" || userLost == "N" || userLost == "n")
 	{
 		cout << "\nIt's okay. I was in denial at first too." << endl;
+	}
+	else
+	{
+		cout << "\nTry Again...";
+		cin >> userLost;
 	}
 	
 	

@@ -27,6 +27,7 @@ Take a screenshot of the program working.
 #include <vector>
 #include <cstdlib>
 #include <ctime>
+#include <stdio.h>
 //Let's add in a namespace
 using namespace std;
 
@@ -256,11 +257,19 @@ void NarrativeForUser()
 			}
 		}
 	}
+
+	system("pause");
+
 	cout << "\nNow that there is light, you look around the room..." << endl;
 	cout << "You see a metal door, with a huge metal lock. You also notice a dresser." << endl;
 	cout << "Which you find rather odd. If I am trapped...why is the lock on the inside. Not the outside? Also, why a dresser" << endl;
 	cout << "Is there a different way out? How would someone trap me inside, lock the door from the inside and be able to leave?" << endl;
-	cin >> look;
+	cin.ignore();
+
+	getline(cin, look);
+	cout << look << endl;
+	cout << "\n\n";
+
 
 	//If user types look left here do the following.
 	if(look == "look left" || look == "Look Left")

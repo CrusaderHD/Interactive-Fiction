@@ -5,7 +5,7 @@
  *Class: CSC215 @ UAT
  *Assignment: Learn Functions through interactive fiction.
  *Assignment Start Date: 10/30/2018
- *Assignmnet Complete Date:
+ *Assignmnet Complete Date: 11/01/2018
  */
 //TASK
 /*
@@ -51,8 +51,6 @@ string metalDoor;	  //String for user to open door. IF they have the key and hav
 
 bool lookLeft;        //Bool for user to look left.
 bool lookRight;       //Bool for user to look right.
-bool lookUp;	      //Bool for user to look up.
-bool lookDown;        //Bool for user to look down.
 bool lightsOn;		  //Bool that symbolizes a light is turned on.
 bool commandsUsed;    //Create a bool to determine if commands are being used.
 bool seeDresser;	  //Bool if user sees the dresser.
@@ -62,6 +60,7 @@ bool seeDoor;		  //Bool if user sees the door.
 bool openDoor;	      //Bool if user opens the door.
 bool seeLock;		  //Bool if user sees the lock.
 bool unlockLock;	  //Bool if user unlocks the lock.
+bool roomEscaped;     //Bool if user escapes the room.
 
 
 //Let's the Functions begin!!!
@@ -70,19 +69,27 @@ void GetUserCommands()
 {
 	cout << "\nTo see commands. Simply type commands: ";
 	cin >> userCommands;
-	cout << "\nRead Carefully...";
 	system("pause");
 	//If user types the word Commands/commands.
 	if (userCommands == "Commands" || userCommands == "commands")
 	{
-		cout << "\nKeywords: Yes, No, Look Up, Look Left, Look Right, Look Down, Inspect, Grab, Touch, Open.\n" << endl;
+		cout << "\n\nCommands: Yes, No, Look Left, Look Right, Inspect, Grab, Touch, Open.\n" << endl;
 		commandsUsed = true;
 	}
 	if(commandsUsed)
 	{
-		cout << "\nThe list above will be the commands you will use to complete your adventure. Remember them. You only see them once...\n";
-		cout << "To continue to the story. Please type 'Continue: ";
+		cout << "\nRemember these...You only see them once.\n";
+		cout << "To continue to the story. Please type Continue: ";
 		cin >> continueStory;
+	}
+	//Conditional if user types in Continue. 
+	if (continueStory == "Continue" || continueStory == "continue")
+	{
+		cout << "\n\nVery well. Moving Along then. Thanks for your participation..." << endl;
+	}
+	else if (!commandsUsed)
+	{
+		cout << "\n\nYou missed out. Good luck guessing." << endl;
 	}
 	system("pause");
 }
@@ -135,22 +142,46 @@ void LookLeft()
 {
 	lookLeft = true;
 	lookRight = false;
-	lookUp = false;
-	lookDown = false;
 
-	if (lookLeft)
+	do
 	{
-		seeDoor = true;
-		cout << "\nYou see the door." << endl;
-		if (seeDoor)
+		if (lookLeft)
 		{
-			cin >> inspect;
-			if (inspect == "inspect" || inspect == "Inspect")
+			seeDoor = true;
+			cout << "\nYou see the door." << endl;
+			if (seeDoor)
 			{
-				seeLock = true;
-				cout << "After a closer look. All you see is the lock." << endl;
+				cin >> inspect;
+				if (inspect == "inspect" || inspect == "Inspect")
+				{
+					seeLock = true;
+					cout << "After a closer look. All you see is the lock." << endl;
+				}
 			}
 		}
+	} while (!keyGrabbed);
+	
+	//Conditional if user has the key in their pocket and they look to the left or at the door.
+	if (lookLeft && keyGrabbed)
+	{
+		seeDoor = true;
+		cout << "\nYou look at the door and remember the key in your pocket." << endl;
+		cout << "You grab the key out of your pocket and look at the lock." << endl;
+		cout << "You  begin to think, no way it's this easy." << endl;
+		cin >> inspect;
+		if (inspect == "inspect" || inspect == "Inspect")
+		{
+			cout << "\nYou inspect the grooves on the key. Then slowly walk up to the lock." << endl;
+			cout << "You begin to insert the key and listen as the grooves sound like they are falling in line with the lock." << endl;
+			cout << "As you feel the key is fully inserted in the lock, you turn the key..." << endl;
+			//TODO: Eventually, make the escape scene more intense...
+			cout << "You hear the lock click and the lock falls off the door and onto the carpet." << endl;
+			cout << "You pull the door open..." << endl;
+			system("pause");
+			cout << "\nTo be continued....\n\n";
+			roomEscaped = true;
+		}
+
 	}
 }
 
@@ -159,64 +190,55 @@ void LookRight()
 {
 	lookLeft = false;
 	lookRight = true;
-	lookUp = false;
-	lookDown = false;
 
-	if (lookRight)
+	do
 	{
-		seeDresser = true;
-		cout << "\nYou see a dresser." << endl;
-		if (seeDresser)
+		if (lookRight)
 		{
-			cin >> inspect;
-			if (inspect == "inspect" || inspect == "Inspect")
+			seeDresser = true;
+			cout << "\nYou see a dresser." << endl;
+			if (seeDresser)
 			{
-				seeDresser = true;
-				cout << "After a closer look. You notice a drawer is loose." << endl;
-				cin >> open;
-				if (open == "open" || open == "Open")
+				cin >> inspect;
+				if (inspect == "inspect" || inspect == "Inspect")
 				{
-					openDresser = true;
-					cout << "\nYou slowly pull open the loose drawer..." << endl;
-					if (openDresser)
+					seeDresser = true;
+					cout << "After a closer look. You notice a drawer is loose." << endl;
+					if (seeDresser)
 					{
-						cout << "You see a shiny object. Looks like a key.";
-						cin >> grab;
-						if (grab == "grab" || grab == "Grab")
+						cin >> open;
+						if (open == "open" || open == "Open")
 						{
-							keyGrabbed = true;
-							cout << "\nYou grab the key and place it in your pocket.";
+							openDresser = true;
+							cout << "\nYou slowly pull open the loose drawer..." << endl;
+							if (openDresser)
+							{
+								cout << "You see a shiny object. Looks like a key.";
+								cin >> grab;
+								if (grab == "grab" || grab == "Grab")
+								{
+									keyGrabbed = true;
+									cout << "\nYou grab the key and place it in your pocket.";
+									//TODO:Add Key to INVENTORY - Pocket
+								}
+							}
+						}
+						else
+						{
+							cout << "\nNot the correct command...";
+							cin >> open;
 						}
 					}
 				}
+				else
+				{
+					cout << "\nNot the correct command...";
+					cin >> inspect;
+				}
 			}
 		}
-	}
-}
-//Function: LookDown.
-void LookDown()
-{
-	lookLeft = false;
-	lookRight = false;
-	lookUp = false;
-	lookDown = true;
-	if (lookDown)
-	{
-		cout << "You look down. Hey look. You're still wearing shoes. Cool, they were expensive...";
-	}
-}
-//Function: LookUp.
-void LookUp()
-{
-	lookLeft = false;
-	lookRight = false;
-	lookUp = true;
-	lookDown = false;
-
-	if (lookUp)
-	{
-		cout << "\nYou see nothing but ceiling." << endl;
-	}
+	} while (!keyGrabbed);
+	
 }
 
 //Function Named 'NarrativeForUser' this will be the main handler for the story. It will incorporate use of other functions. Primarily used to keep main() clean and organized.
@@ -264,39 +286,42 @@ void NarrativeForUser()
 	cout << "You see a metal door, with a huge metal lock. You also notice a dresser." << endl;
 	cout << "Which you find rather odd. If I am trapped...why is the lock on the inside. Not the outside? Also, why a dresser" << endl;
 	cout << "Is there a different way out? How would someone trap me inside, lock the door from the inside and be able to leave?" << endl;
-	cin.ignore();
 
-	getline(cin, look);
-	cout << look << endl;
-	cout << "\n\n";
+	//Do while loop for user to keep iterating through the game until roomEscaped.
+	do
+	{
+		roomEscaped = false;
+
+		cout << "\nWell, guess I better find a way out...\n";
+
+		cin.ignore();
+
+		getline(cin, look);
+		cout << look << endl;
+		cout << "\n\n";
 
 
-	//If user types look left here do the following.
-	if(look == "look left" || look == "Look Left")
-	{
-		LookLeft();
-	}
-	//If user types look right here do the following.
-	else if (look == "look right" || look == "Look Right")
-	{
-		LookRight();
-	}
-	//If user types look up here do the following.
-	else if (look == "look up" || look == "Look Up")
-	{
-		LookUp();
-	}
-	//If user types look down here do the following.
-	else if (look == "look down" || look == "Look Down")
-	{
-		LookDown();
-	}
-	else
-	{
-		cout << "\nHmm something isn't right." << endl;
-		system("pause");
-	}
+		//If user types look left here do the following.
+		if (look == "look left" || look == "Look Left")
+		{
+			LookLeft();
+		}
+		//If user types look right here do the following.
+		else if (look == "look right" || look == "Look Right")
+		{
+			LookRight();
+		}
+		//If user types look up here do the following.
+		else
+		{
+			cout << "\nHmm something isn't right." << endl;
+			system("pause");
+		}
 
+	} while (!roomEscaped);
+	
+
+	
 	//TODO: Make This
 }
 
